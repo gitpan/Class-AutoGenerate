@@ -5,13 +5,14 @@ package Class::AutoGenerate::Declare;
 
 require Exporter;
 
-our $VERSION = 0.03;
+our $VERSION = 0.04;
 
 our @ISA = qw( Exporter );
 our @EXPORT = qw(
     declare requiring generates
     extends uses requires defines
     generate_from source_code source_file
+    next_rule last_rule
 );
 
 use Scalar::Util qw/ reftype /;
@@ -400,6 +401,22 @@ sub source_file($) {
     local $/;
     return <$fh>;
 }
+
+=head2 next_rule
+
+By calling the C<next_rule> statement, you will prevent the current L</generates> statement from finishing. Instead, it will quit and the next L</requirng> rule will be tried.
+
+=cut
+
+sub next_rule() { die "NEXT_RULE\n" }
+
+=head2 last_rule
+
+The C<last_rule> statement causes the class loader to stop completely and return that it found no matching Perl modules.
+
+=cut
+
+sub last_rule() { die "LAST_RULE\n" }
 
 =head1 AUTHOR
 
